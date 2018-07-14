@@ -4,7 +4,7 @@ using System.Linq;
 using AutoMapper;
 using Airport.BLL.Interfaces;
 using Airport.DAL.Interfaces;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 using Airport.Shared.DTO;
 
 

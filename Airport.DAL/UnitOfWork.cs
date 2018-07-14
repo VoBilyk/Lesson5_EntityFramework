@@ -1,6 +1,6 @@
 ﻿using Airport.DAL.Interfaces;
 using Airport.DAL.Repositories;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 
 namespace Airport.DAL
 {

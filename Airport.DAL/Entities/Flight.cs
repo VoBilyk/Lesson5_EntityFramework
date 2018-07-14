@@ -1,10 +1,9 @@
-﻿using Airport.DAL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Airport.DAL.Models
+namespace Airport.DAL.Entities
 {
-    public class Flight : IEntity
+    public class Flight
     {
         public Guid Id { get; set; }
 
@@ -16,6 +15,6 @@ namespace Airport.DAL.Models
 
         public DateTime DepartureTime { get; set; }
 
-        public List<Ticket> Tickets { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

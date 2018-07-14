@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 using Bogus;
 
 namespace Airport.DAL

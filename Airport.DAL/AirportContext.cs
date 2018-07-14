@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 
 
 namespace Airport.DAL

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Airport.DAL;
 using Airport.DAL.Interfaces;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 using Airport.BLL.Interfaces;
 using Airport.BLL.Services;
 using Airport.Shared.DTO;

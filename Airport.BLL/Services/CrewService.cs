@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Airport.BLL.Interfaces;
 using Airport.DAL.Interfaces;
-using Airport.DAL.Models;
+using Airport.DAL.Entities;
 using Airport.Shared.DTO;
 using AutoMapper;
 

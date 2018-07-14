@@ -1,9 +1,8 @@
-﻿using Airport.DAL.Interfaces;
-using System;
+﻿using System;
 
-namespace Airport.DAL.Models
+namespace Airport.DAL.Entities
 {
-    public class Stewardess : IEntity
+    public class Stewardess
     {
         public Guid Id { get; set; }
 
