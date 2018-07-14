@@ -36,7 +36,7 @@ namespace Airport.DAL
                 .RuleFor(o => o.Id, f => Guid.NewGuid())
                 .RuleFor(o => o.AeroplaneType, f => aeroplaneTypeFaker.Generate())
                 .RuleFor(o => o.Name, f => f.Lorem.Word())
-                .RuleFor(o => o.Lifetime, f => f.Date.Timespan(new TimeSpan(3000, 0, 0, 0)));
+                .RuleFor(o => o.LifetimeFullForm, f => f.Date.Timespan(new TimeSpan(5*365, 0, 0, 0)));
 
             var departureFaker = new Faker<Departure>()
                 .RuleFor(o => o.Id, f => Guid.NewGuid())
@@ -55,7 +55,6 @@ namespace Airport.DAL
                 .RuleFor(o => o.Tickets, f => ticketFaker.Generate(Randomizer.Seed.Next(0, 10)))
                 .RuleFor(o => o.DepartureTime, f => f.Date.Soon(365).ToUniversalTime())
                 .RuleFor(o => o.ArrivalTime, (f, o) => (o.DepartureTime + f.Date.Timespan(new TimeSpan(8, 0, 0))).ToUniversalTime());
-
 
 
             context.Pilots.AddRange(pilotFaker.Generate(20));

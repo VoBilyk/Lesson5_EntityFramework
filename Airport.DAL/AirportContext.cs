@@ -24,19 +24,20 @@ namespace Airport.DAL
         public DbSet<Ticket> Tickets { get; set; }
 
 
-        public AirportContext() : base()
+        public AirportContext()
         {
-            if(!Database.EnsureCreated())
-            {
+            //if(!Database.EnsureCreated())
+            //{
                 
-            }
+            //}
 
-            AirportInitializer.Intializate(this);
+            //AirportInitializer.Intializate(this);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("AirportDb");
+            //optionsBuilder.UseInMemoryDatabase("AirportDb");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AirportBilykDB;Trusted_Connection=True;");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Airport.DAL.Entities
 {
@@ -10,6 +11,19 @@ namespace Airport.DAL.Entities
 
         public AeroplaneType AeroplaneType { get; set; }
 
-        public TimeSpan Lifetime { get; set; }
+        public long LifeTimeHourses { get; set; }
+
+        [NotMapped]
+        public TimeSpan LifetimeFullForm {
+            get
+            {
+                return LifetimeFullForm;
+            }
+
+            set
+            {
+                value = TimeSpan.FromHours(LifeTimeHourses);
+            }
+        }
     }
 }
