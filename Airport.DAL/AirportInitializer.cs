@@ -1,8 +1,6 @@
 ﻿using Airport.DAL.Entities;
 using Bogus;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Airport.DAL
 {
@@ -28,63 +26,45 @@ namespace Airport.DAL
                 .RuleFor(o => o.Pilot, f => pilotFaker.Generate())
                 .RuleFor(o => o.Stewardesses, f => stewardessFaker.Generate(Randomizer.Seed.Next(1, 4)));
 
-            //var crewFaker = new Faker<Crew>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.Pilot, f => f.PickRandom(context.Aeroplanes))
-            //    .RuleFor(o => o.Stewardesses, f => f.PickRandom(stewardesses, Randomizer.Seed.Next(1, 4)).ToList());
+            var aeroplaneTypeFaker = new Faker<AeroplaneType>()
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.Model, f => "Boeing-" + f.Random.Number(100, 999))
+                .RuleFor(o => o.Places, f => f.Random.Number(20, 300))
+                .RuleFor(o => o.Carrying, f => f.Random.Number(20000, 200000));
 
-            //var aeroplaneTypeFaker = new Faker<AeroplaneType>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.Model, f => "Boeing-" + f.Random.Number(100, 999))
-            //    .RuleFor(o => o.Places, f => f.Random.Number(20, 300))
-            //    .RuleFor(o => o.Carrying, f => f.Random.Number(20000, 200000));
+            var aeroplaneFaker = new Faker<Aeroplane>()
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.AeroplaneType, f => aeroplaneTypeFaker.Generate())
+                .RuleFor(o => o.Name, f => f.Lorem.Word())
+                .RuleFor(o => o.Lifetime, f => f.Date.Timespan(new TimeSpan(3000, 0, 0, 0)));
 
-            //var aeroplaneFaker = new Faker<Aeroplane>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.AeroplaneType, f => f.PickRandom(aeroplaneTypes))
-            //    .RuleFor(o => o.Name, f => f.Lorem.Word())
-            //    .RuleFor(o => o.Lifetime, f => f.Date.Timespan(new TimeSpan(3000, 0, 0, 0)));
+            var departureFaker = new Faker<Departure>()
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.Airplane, f => aeroplaneFaker.Generate())
+                .RuleFor(o => o.Crew, f => crewFaker.Generate())
+                .RuleFor(o => o.Time, f => f.Date.Soon(200).ToUniversalTime());
 
-            //var departureFaker = new Faker<Departure>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.Airplane, f => f.PickRandom(aeroplanes))
-            //    .RuleFor(o => o.Crew, f => f.PickRandom(crews))
-            //    .RuleFor(o => o.Time, f => f.Date.Soon(200).ToUniversalTime());
+            var ticketFaker = new Faker<Ticket>()
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.Price, f => f.Random.Number(20, 100));
 
-            //var flightFaker = new Faker<Flight>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.DeparturePoint, f => f.Address.City())
-            //    .RuleFor(o => o.Destinition, f => f.Address.City())
-            //    .RuleFor(o => o.DepartureTime, f => f.Date.Soon(365).ToUniversalTime())
-            //    .RuleFor(o => o.ArrivalTime, (f, o) => (o.DepartureTime + f.Date.Timespan(new TimeSpan(8, 0, 0))).ToUniversalTime());
-
-            //var ticketFaker = new Faker<Ticket>()
-            //    .RuleFor(o => o.Id, f => Guid.NewGuid())
-            //    .RuleFor(o => o.Price, f => f.Random.Number(20, 100))
-            //    .RuleFor(o => o.Flight, f => f.PickRandom(flights));
+            var flightFaker = new Faker<Flight>()
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.DeparturePoint, f => f.Address.City())
+                .RuleFor(o => o.Destinition, f => f.Address.City())
+                .RuleFor(o => o.Tickets, f => ticketFaker.Generate(Randomizer.Seed.Next(0, 10)))
+                .RuleFor(o => o.DepartureTime, f => f.Date.Soon(365).ToUniversalTime())
+                .RuleFor(o => o.ArrivalTime, (f, o) => (o.DepartureTime + f.Date.Timespan(new TimeSpan(8, 0, 0))).ToUniversalTime());
 
 
-            //// Generating date
-            //context.Pilots.AddRange(pilotFaker.Generate(20));
-            //stewardesses = stewardessFaker.Generate(20);
-            //crews = crewFaker.Generate(5);
-            //aeroplaneTypes = aeroplaneTypeFaker.Generate(5);
-            //aeroplanes = aeroplaneFaker.Generate(20);
-            //departures = departureFaker.Generate(30);
-            //flights = flightFaker.Generate(15);
-            //tickets = ticketFaker.Generate(40);
 
-            //// Connecting tickets to flight
-            //foreach (var flight in flights)
-            //{
-            //    flight.Tickets = tickets.Where(t => t.Flight.Id == flight.Id).ToList();
-            //}
-
-
-            //context.Pilots.AddRange(pilotFaker.Generate(20));
-            //context.Stewardesses.AddRange(stewardessFaker.Generate(20));
+            context.Pilots.AddRange(pilotFaker.Generate(20));
+            context.Stewardesses.AddRange(stewardessFaker.Generate(20));
             context.Crews.AddRange(crewFaker.Generate(20));
-
+            context.Flights.AddRange(flightFaker.Generate(20));
+            context.Aeroplanes.AddRange(aeroplaneFaker.Generate(20));
+            context.AeroplaneTypes.AddRange(aeroplaneTypeFaker.Generate(5));
+            context.Departures.AddRange(departureFaker.Generate(20));
 
             context.SaveChanges();
         }

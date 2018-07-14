@@ -6,7 +6,6 @@ namespace Airport.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DataSource oldBb = new DataSource();
         private AirportContext db = new AirportContext();
 
         private TicketRepository ticketRepository;
