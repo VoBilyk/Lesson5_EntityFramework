@@ -5,6 +5,6 @@ namespace Airport.DAL.Repositories
 {
     public class DepartureRepository : GenericRepository<Departure>
     {
-        public DepartureRepository(List<Departure> contex) : base(contex) { }
+        public DepartureRepository(AirportContext contex) : base(contex) { }
     }
 }

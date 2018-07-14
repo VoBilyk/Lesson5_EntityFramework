@@ -19,5 +19,7 @@ namespace Airport.DAL.Interfaces
         IRepository<Pilot> PilotRepositiry { get; }
 
         IRepository<Stewardess> StewardessRepositiry { get; }
+
+        void Save();
     }
 }

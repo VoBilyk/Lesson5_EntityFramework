@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Airport.DAL.Interfaces;
 
 namespace Airport.DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : IEntity
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly List<TEntity> db;
+        private AirportContext context;
+        private DbSet<TEntity> dbSet;
 
-        public GenericRepository(List<TEntity> context)
+
+        public GenericRepository(AirportContext context)
         {
-            this.db = context;
+            this.context = context;
+            this.dbSet = context.Set<TEntity>();
         }
+
 
         public TEntity Get(Guid id)
         {
-            var item = db.Find(t => t.Id == id);
+            var item = dbSet.Find(id);
 
             if(item == null)
             {
@@ -27,49 +33,56 @@ namespace Airport.DAL.Repositories
 
         public List<TEntity> GetAll()
         {
-            return db;
+            return dbSet.ToList();
         }
 
         public void Create(TEntity item)
         {
-            var foundedItem = db.Find(i => i.Id == item.Id);
+            // TODO
+            //var foundedItem = dbSet.Find(item);
 
-            if (foundedItem != null)
-            {
-                throw new ArgumentException("Item has alredy exist");
-            }
+            //if (foundedItem != null)
+            //{
+            //    throw new ArgumentException("Item has alredy exist");
+            //}
 
-            db.Add(item);
+            dbSet.Add(item);
         }
 
         public void Update(TEntity item)
         {
-            var foundedItem = db.Find(t => t.Id == item.Id);
+            //var foundedItem = db.Find(t => t.Id == item.Id);
 
-            if (foundedItem == null)
-            {
-                throw new ArgumentException("Item don`t exists");
-            }
+            //if (foundedItem == null)
+            //{
+            //    throw new ArgumentException("Item don`t exists");
+            //}
 
-            db.Remove(foundedItem);
-            db.Add(item);
+            dbSet.Update(item);
+            // TODO
+            //db.Remove(foundedItem);
+            //db.Add(item);
         }
 
         public void Delete(Guid id)
         {
-            var ticket = db.Find(item => item.Id == id);
+            //var ticket = dbSet.Find(id);
 
-            if (ticket == null)
-            {
-                throw new ArgumentException("Id don`t exists");
-            }
+            //if (ticket == null)
+            //{
+            //    throw new ArgumentException("Id don`t exists");
+            //}
 
-            db.Remove(ticket);
+            var item = dbSet.Find(id);
+            dbSet.Remove(item);
         }
 
         public void Delete()
         {
-            db.Clear();
+            foreach (var item in dbSet)
+            {
+                dbSet.Remove(item);
+            }
         }
     }
 }

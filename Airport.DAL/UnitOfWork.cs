@@ -6,7 +6,8 @@ namespace Airport.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DataSource db = new DataSource();
+        private DataSource oldBb = new DataSource();
+        private AirportContext db = new AirportContext();
 
         private TicketRepository ticketRepository;
         private AeroplaneRepository aeroplaneRepository;
@@ -24,7 +25,7 @@ namespace Airport.DAL
             {
                 if (this.ticketRepository == null)
                 {
-                    this.ticketRepository = new TicketRepository(db.Tickets);
+                    this.ticketRepository = new TicketRepository(db);
                 }
                 return ticketRepository;
             }
@@ -36,7 +37,7 @@ namespace Airport.DAL
             {
                 if (this.aeroplaneRepository == null)
                 {
-                    this.aeroplaneRepository = new AeroplaneRepository(db.Aeroplanes);
+                    this.aeroplaneRepository = new AeroplaneRepository(db);
                 }
                 return aeroplaneRepository;
             }
@@ -48,7 +49,7 @@ namespace Airport.DAL
             {
                 if (this.aeroplaneTypeRepositiry == null)
                 {
-                    this.aeroplaneTypeRepositiry = new AeroplaneTypeRepository(db.AeroplaneTypes);
+                    this.aeroplaneTypeRepositiry = new AeroplaneTypeRepository(db);
                 }
                 return aeroplaneTypeRepositiry;
             }
@@ -60,7 +61,7 @@ namespace Airport.DAL
             {
                 if (this.crewRepositiry == null)
                 {
-                    this.crewRepositiry = new CrewRepository(db.Crews);
+                    this.crewRepositiry = new CrewRepository(db);
                 }
                 return crewRepositiry;
             }
@@ -72,7 +73,7 @@ namespace Airport.DAL
             {
                 if (this.departureRepository == null)
                 {
-                    this.departureRepository = new DepartureRepository(db.Departures);
+                    this.departureRepository = new DepartureRepository(db);
                 }
                 return departureRepository;
             }
@@ -84,7 +85,7 @@ namespace Airport.DAL
             {
                 if (this.flightRepository == null)
                 {
-                    this.flightRepository = new FlightRepository(db.Flights);
+                    this.flightRepository = new FlightRepository(db);
                 }
                 return flightRepository;
             }
@@ -96,7 +97,7 @@ namespace Airport.DAL
             {
                 if (this.pilotRepository == null)
                 {
-                    this.pilotRepository = new PilotRepository(db.Pilots);
+                    this.pilotRepository = new PilotRepository(db);
                 }
                 return pilotRepository;
             }
@@ -108,10 +109,15 @@ namespace Airport.DAL
             {
                 if (this.stewardessRepository == null)
                 {
-                    this.stewardessRepository = new StewardessRepository(db.Stewardesses);
+                    this.stewardessRepository = new StewardessRepository(db);
                 }
                 return stewardessRepository;
             }
+        }
+
+        public void Save()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

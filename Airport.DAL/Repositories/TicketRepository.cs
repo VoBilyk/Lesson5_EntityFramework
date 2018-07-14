@@ -5,6 +5,6 @@ namespace Airport.DAL.Repositories
 {
     public class TicketRepository : GenericRepository<Ticket>
     {
-        public TicketRepository(List<Ticket> contex) : base(contex) { }
+        public TicketRepository(AirportContext contex) : base(contex) { }
     }
 }
