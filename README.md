@@ -1,4 +1,4 @@
-# Lesson5_EntityFramework
+# Lesson5 EntityFramework
 
 ## Що зроблено:
 * До попередього проекту, де було розроблено RESTfull Api диспетчера аеропорту добавлено EntityFramework Core
