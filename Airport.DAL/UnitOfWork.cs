@@ -115,9 +115,9 @@ namespace Airport.DAL
             }
         }
 
-        public void Save()
+        public void SaveChanges()
         {
-            throw new System.NotImplementedException();
+            db.SaveChanges();
         }
     }
 }

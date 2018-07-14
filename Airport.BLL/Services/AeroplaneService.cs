@@ -38,6 +38,7 @@ namespace Airport.BLL.Services
             aeroplane.Id = Guid.NewGuid();
             aeroplane.AeroplaneType = db.AeroplaneTypeRepository.Get(aeroplaneDto.AeroplaneTypeId);
             db.AeroplaneRepository.Create(aeroplane);
+            db.SaveChanges();
 
             return mapper.Map<Aeroplane, AeroplaneDto>(aeroplane);
         }
@@ -49,6 +50,7 @@ namespace Airport.BLL.Services
             aeroplane.Id = id;
             aeroplane.AeroplaneType = db.AeroplaneTypeRepository.Get(aeroplaneDto.AeroplaneTypeId);
             db.AeroplaneRepository.Update(aeroplane);
+            db.SaveChanges();
 
             return mapper.Map<Aeroplane, AeroplaneDto>(aeroplane);
         }
@@ -56,11 +58,13 @@ namespace Airport.BLL.Services
         public void Delete(Guid id)
         {
             db.AeroplaneRepository.Delete(id);
+            db.SaveChanges();
         }
 
         public void DeleteAll()
         {
             db.AeroplaneRepository.Delete();
+            db.SaveChanges();
         }
     }
 }

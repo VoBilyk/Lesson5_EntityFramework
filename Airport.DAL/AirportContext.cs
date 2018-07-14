@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
 using Airport.DAL.Models;
 
 
@@ -23,10 +24,13 @@ namespace Airport.DAL
         public DbSet<Ticket> Tickets { get; set; }
 
 
-        public AirportContext()
+        public AirportContext() : base()
         {
-            Database.EnsureCreated();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseInMemoryDatabase("AirportDb");
+        }
     }
 }

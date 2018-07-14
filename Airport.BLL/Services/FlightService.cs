@@ -39,6 +39,7 @@ namespace Airport.BLL.Services
             flight.Tickets = db.TicketRepository.GetAll().Where(i => flightDto.TicketsId.Contains(i.Id)).ToList();
 
             db.FlightRepository.Create(flight);
+            db.SaveChanges();
 
             return mapper.Map<Flight, FlightDto>(flight);
         }
@@ -50,17 +51,21 @@ namespace Airport.BLL.Services
             flight.Tickets = db.TicketRepository.GetAll().Where(i => flightDto.TicketsId.Contains(i.Id)).ToList();
             
             db.FlightRepository.Update(flight);
+            db.SaveChanges();
+
             return mapper.Map<Flight, FlightDto>(flight);
         }
 
         public void Delete(Guid id)
         {
             db.FlightRepository.Delete(id);
+            db.SaveChanges();
         }
 
         public void DeleteAll()
         {
             db.FlightRepository.Delete();
+            db.SaveChanges();
         }
     }
 }

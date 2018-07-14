@@ -40,6 +40,7 @@ namespace Airport.BLL.Services
             crew.Stewardesses = db.StewardessRepositiry.GetAll().Where(i => crewDto.StewardessesId.Contains(i.Id)).ToList();
             
             db.CrewRepositiry.Create(crew);
+            db.SaveChanges();
 
             return mapper.Map<Crew, CrewDto>(crew);
         }
@@ -53,6 +54,7 @@ namespace Airport.BLL.Services
             crew.Stewardesses = db.StewardessRepositiry.GetAll().Where(i => crewDto.StewardessesId.Contains(i.Id)).ToList();
 
             db.CrewRepositiry.Update(crew);
+            db.SaveChanges();
 
             return mapper.Map<Crew, CrewDto>(crew);
         }
@@ -60,11 +62,13 @@ namespace Airport.BLL.Services
         public void Delete(Guid id)
         {
             db.CrewRepositiry.Delete(id);
+            db.SaveChanges();
         }
 
         public void DeleteAll()
         {
             db.CrewRepositiry.Delete();
+            db.SaveChanges();
         }
     }
 }

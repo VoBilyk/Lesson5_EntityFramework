@@ -37,6 +37,7 @@ namespace Airport.BLL.Services
             stewardess.Id = Guid.NewGuid();
 
             db.StewardessRepositiry.Create(stewardess);
+            db.SaveChanges();
 
             return mapper.Map<Stewardess, StewardessDto>(stewardess);
         }
@@ -47,6 +48,7 @@ namespace Airport.BLL.Services
             stewardess.Id = id;
 
             db.StewardessRepositiry.Update(stewardess);
+            db.SaveChanges();
 
             return mapper.Map<Stewardess, StewardessDto>(stewardess);
         }
@@ -54,11 +56,13 @@ namespace Airport.BLL.Services
         public void Delete(Guid id)
         {
             db.StewardessRepositiry.Delete(id);
+            db.SaveChanges();
         }
 
         public void DeleteAll()
         {
             db.StewardessRepositiry.Delete();
+            db.SaveChanges();
         }
     }
 }
