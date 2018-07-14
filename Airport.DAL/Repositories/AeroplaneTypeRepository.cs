@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Airport.DAL.Entities;
+﻿using Airport.DAL.Entities;
 
 namespace Airport.DAL.Repositories
 {

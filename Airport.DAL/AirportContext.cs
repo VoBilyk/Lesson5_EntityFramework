@@ -26,6 +26,12 @@ namespace Airport.DAL
 
         public AirportContext() : base()
         {
+            if(!Database.EnsureCreated())
+            {
+                
+            }
+
+            AirportInitializer.Intializate(this);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

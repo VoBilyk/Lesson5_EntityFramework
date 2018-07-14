@@ -8,18 +8,16 @@ namespace Airport.DAL.Repositories
 {
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private AirportContext context;
-        private DbSet<TEntity> dbSet;
+        protected DbSet<TEntity> dbSet;
 
 
         public GenericRepository(AirportContext context)
         {
-            this.context = context;
             this.dbSet = context.Set<TEntity>();
         }
 
 
-        public TEntity Get(Guid id)
+        public virtual TEntity Get(Guid id)
         {
             var item = dbSet.Find(id);
 
@@ -31,12 +29,12 @@ namespace Airport.DAL.Repositories
             return item;
         }
 
-        public List<TEntity> GetAll()
+        public virtual List<TEntity> GetAll()
         {
             return dbSet.ToList();
         }
 
-        public void Create(TEntity item)
+        public virtual void Create(TEntity item)
         {
             // TODO
             //var foundedItem = dbSet.Find(item);
@@ -49,7 +47,7 @@ namespace Airport.DAL.Repositories
             dbSet.Add(item);
         }
 
-        public void Update(TEntity item)
+        public virtual void Update(TEntity item)
         {
             //var foundedItem = db.Find(t => t.Id == item.Id);
 
@@ -64,7 +62,7 @@ namespace Airport.DAL.Repositories
             //db.Add(item);
         }
 
-        public void Delete(Guid id)
+        public virtual void Delete(Guid id)
         {
             //var ticket = dbSet.Find(id);
 
@@ -77,7 +75,7 @@ namespace Airport.DAL.Repositories
             dbSet.Remove(item);
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
             foreach (var item in dbSet)
             {
