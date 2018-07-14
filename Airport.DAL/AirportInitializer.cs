@@ -49,7 +49,7 @@ namespace Airport.DAL
                 .RuleFor(o => o.Price, f => f.Random.Number(20, 100));
 
             var flightFaker = new Faker<Flight>()
-                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.Name, f => $"{f.Random.Chars('A', 'Z', 5)}")
                 .RuleFor(o => o.DeparturePoint, f => f.Address.City())
                 .RuleFor(o => o.Destinition, f => f.Address.City())
                 .RuleFor(o => o.Tickets, f => ticketFaker.Generate(Randomizer.Seed.Next(0, 10)))

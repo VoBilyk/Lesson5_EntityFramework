@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Airport.DAL.Entities
 {
@@ -6,10 +7,14 @@ namespace Airport.DAL.Entities
     {
         public Guid Id { get; set; }
 
+        [Required]
+        [MinLength(3, ErrorMessage = "AeroplaneType model name must be not less than 3 symbols")]
         public string Model { get; set; }
 
+        [Required]
         public int Places { get; set; }
 
+        [Required]
         public int Carrying { get; set; }
     }
 }
