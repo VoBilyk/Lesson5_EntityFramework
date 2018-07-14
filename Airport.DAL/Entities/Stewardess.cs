@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Airport.DAL.Entities
@@ -17,5 +18,7 @@ namespace Airport.DAL.Entities
 
         [Required]
         public DateTime BirthDate { get; set; }
+
+        public virtual Crew Crew { get; set; }
     }
 }

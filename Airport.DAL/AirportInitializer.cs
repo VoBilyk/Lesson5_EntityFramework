@@ -49,7 +49,8 @@ namespace Airport.DAL
                 .RuleFor(o => o.Price, f => f.Random.Number(20, 100));
 
             var flightFaker = new Faker<Flight>()
-                .RuleFor(o => o.Name, f => $"{f.Random.Chars('A', 'Z', 5)}")
+                .RuleFor(o => o.Id, f => Guid.NewGuid())
+                .RuleFor(o => o.Name, f => $"{f.Random.String(4, 4, 'A', 'Z')}-{f.Random.Number(100, 999)}")
                 .RuleFor(o => o.DeparturePoint, f => f.Address.City())
                 .RuleFor(o => o.Destinition, f => f.Address.City())
                 .RuleFor(o => o.Tickets, f => ticketFaker.Generate(Randomizer.Seed.Next(0, 10)))
@@ -60,7 +61,10 @@ namespace Airport.DAL
             context.Pilots.AddRange(pilotFaker.Generate(20));
             context.Stewardesses.AddRange(stewardessFaker.Generate(20));
             context.Crews.AddRange(crewFaker.Generate(20));
+
             context.Flights.AddRange(flightFaker.Generate(20));
+            context.SaveChanges();
+
             context.Aeroplanes.AddRange(aeroplaneFaker.Generate(20));
             context.AeroplaneTypes.AddRange(aeroplaneTypeFaker.Generate(5));
             context.Departures.AddRange(departureFaker.Generate(20));

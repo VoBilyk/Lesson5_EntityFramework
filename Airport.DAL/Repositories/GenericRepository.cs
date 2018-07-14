@@ -36,42 +36,37 @@ namespace Airport.DAL.Repositories
 
         public virtual void Create(TEntity item)
         {
-            // TODO
-            //var foundedItem = dbSet.Find(item);
+            var foundedItem = dbSet.Find(item);
 
-            //if (foundedItem != null)
-            //{
-            //    throw new ArgumentException("Item has alredy exist");
-            //}
+            if (foundedItem == null)
+            {
+                throw new ArgumentException("Item don`t exists");
+            }
 
             dbSet.Add(item);
         }
 
         public virtual void Update(TEntity item)
         {
-            //var foundedItem = db.Find(t => t.Id == item.Id);
+            var foundedItem = dbSet.Find(item);
 
-            //if (foundedItem == null)
-            //{
-            //    throw new ArgumentException("Item don`t exists");
-            //}
+            if (foundedItem == null)
+            {
+                throw new ArgumentException("Item don`t exists");
+            }
 
             dbSet.Update(item);
-            // TODO
-            //db.Remove(foundedItem);
-            //db.Add(item);
         }
 
         public virtual void Delete(Guid id)
         {
-            //var ticket = dbSet.Find(id);
-
-            //if (ticket == null)
-            //{
-            //    throw new ArgumentException("Id don`t exists");
-            //}
-
             var item = dbSet.Find(id);
+
+            if (item == null)
+            {
+                throw new ArgumentException("Id don`t exists");
+            }
+            
             dbSet.Remove(item);
         }
 

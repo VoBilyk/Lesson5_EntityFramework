@@ -6,7 +6,9 @@ namespace Airport.DAL.Entities
 {
     public class Flight
     {
-        [Key]
+        public Guid Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]
@@ -21,7 +23,7 @@ namespace Airport.DAL.Entities
         [Required]
         public DateTime DepartureTime { get; set; }
 
-        [Required]
-        public ICollection<Ticket> Tickets { get; set; }
+        
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

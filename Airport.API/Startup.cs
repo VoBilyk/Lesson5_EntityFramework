@@ -10,7 +10,7 @@ using Airport.DAL.Entities;
 using Airport.BLL.Interfaces;
 using Airport.BLL.Services;
 using Airport.Shared.DTO;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Airport.API
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +18,8 @@ namespace Airport.DAL.Entities
 
         [Required]
         public long LifeTimeHourses { get; set; }
+
+        public virtual ICollection<Departure> Departures { get; set; }
 
         [NotMapped]
         public TimeSpan LifetimeFullForm {

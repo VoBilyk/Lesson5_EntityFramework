@@ -10,6 +10,9 @@ namespace Airport.Shared.DTO
         public Guid Id { get; set; }
 
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public string DeparturePoint { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Airport.DAL.Entities
@@ -16,5 +17,7 @@ namespace Airport.DAL.Entities
 
         [Required]
         public int Carrying { get; set; }
+
+        public virtual ICollection<Aeroplane> Aeroplanes { get; set; }
     }
 }

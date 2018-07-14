@@ -4,14 +4,16 @@ using Airport.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Airport.DAL.Migrations
 {
     [DbContext(typeof(AirportContext))]
-    partial class AirportContextModelSnapshot : ModelSnapshot
+    [Migration("20180714125247_AddedFieldNameToFlightTable")]
+    partial class AddedFieldNameToFlightTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace Airport.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("PilotId");
+                    b.Property<Guid>("PilotId");
 
                     b.HasKey("Id");
 
@@ -74,9 +76,9 @@ namespace Airport.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("AirplaneId");
+                    b.Property<Guid>("AirplaneId");
 
-                    b.Property<Guid?>("CrewId");
+                    b.Property<Guid>("CrewId");
 
                     b.Property<DateTime>("Time");
 
@@ -173,7 +175,7 @@ namespace Airport.DAL.Migrations
             modelBuilder.Entity("Airport.DAL.Entities.Aeroplane", b =>
                 {
                     b.HasOne("Airport.DAL.Entities.AeroplaneType", "AeroplaneType")
-                        .WithMany("Aeroplanes")
+                        .WithMany()
                         .HasForeignKey("AeroplaneTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -181,24 +183,27 @@ namespace Airport.DAL.Migrations
             modelBuilder.Entity("Airport.DAL.Entities.Crew", b =>
                 {
                     b.HasOne("Airport.DAL.Entities.Pilot", "Pilot")
-                        .WithMany("Crews")
-                        .HasForeignKey("PilotId");
+                        .WithMany()
+                        .HasForeignKey("PilotId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Airport.DAL.Entities.Departure", b =>
                 {
                     b.HasOne("Airport.DAL.Entities.Aeroplane", "Airplane")
-                        .WithMany("Departures")
-                        .HasForeignKey("AirplaneId");
+                        .WithMany()
+                        .HasForeignKey("AirplaneId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Airport.DAL.Entities.Crew", "Crew")
-                        .WithMany("Departures")
-                        .HasForeignKey("CrewId");
+                        .WithMany()
+                        .HasForeignKey("CrewId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Airport.DAL.Entities.Stewardess", b =>
                 {
-                    b.HasOne("Airport.DAL.Entities.Crew", "Crew")
+                    b.HasOne("Airport.DAL.Entities.Crew")
                         .WithMany("Stewardesses")
                         .HasForeignKey("CrewId");
                 });

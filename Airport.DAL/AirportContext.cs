@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Airport.DAL.Entities;
 
 
@@ -26,18 +25,59 @@ namespace Airport.DAL
 
         public AirportContext()
         {
-            //if(!Database.EnsureCreated())
-            //{
-                
-            //}
+            //Database.EnsureDeleted();
+            //Database.Migrate();
 
-            //AirportInitializer.Intializate(this);
+            if (Database.EnsureCreated())
+            {
+                AirportInitializer.Intializate(this);
+            }
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseInMemoryDatabase("AirportDb");
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AirportBilykDB;Trusted_Connection=True;");
+            // I know it`s a bad way to use connecting string
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AirportDb(Bilyk);Trusted_Connection=True;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ticket>()
+                .HasOne(x => x.Flight)
+                .WithMany(x => x.Tickets);
+
+            modelBuilder.Entity<Flight>()
+                .HasMany(x => x.Tickets)
+                .WithOne(x => x.Flight);
+
+            modelBuilder.Entity<Crew>()
+                .HasOne(x => x.Pilot)
+                .WithMany(x => x.Crews);
+
+            modelBuilder.Entity<Pilot>()
+                .HasMany(x => x.Crews)
+                .WithOne(x => x.Pilot);
+
+            modelBuilder.Entity<Crew>()
+                .HasOne(x => x.Pilot)
+                .WithMany(x => x.Crews);
+
+            modelBuilder.Entity<Crew>()
+                .HasOne(x => x.Pilot)
+                .WithMany(x => x.Crews);
+
+            modelBuilder.Entity<Crew>()
+                 .HasMany(x => x.Departures)
+                 .WithOne(x => x.Crew);
+
+            modelBuilder.Entity<AeroplaneType>()
+                .HasMany(x => x.Aeroplanes)
+                .WithOne(x => x.AeroplaneType);
+
+            modelBuilder.Entity<Departure>()
+                 .HasOne(x => x.Airplane)
+                 .WithMany(x => x.Departures);
         }
     }
 }
